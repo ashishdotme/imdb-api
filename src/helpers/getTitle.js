@@ -42,21 +42,6 @@ export default async function getTitle(id) {
       wins: props.mainColumnData.wins?.total ?? 0,
       nominations: props.mainColumnData.nominations?.total ?? 0,
     },
-    genre: props.aboveTheFoldData.genres.genres.map((e) => e.id),
-    releaseDetailed: {
-      date: new Date(
-        props.aboveTheFoldData.releaseDate.year,
-        props.aboveTheFoldData.releaseDate.month - 1,
-        props.aboveTheFoldData.releaseDate.day
-      ).toISOString(),
-      day: props.aboveTheFoldData.releaseDate.day,
-      month: props.aboveTheFoldData.releaseDate.month,
-      year: props.aboveTheFoldData.releaseDate.year,
-      releaseLocation: {
-        country: props.mainColumnData.releaseDate?.country?.text,
-        cca2: props.mainColumnData.releaseDate?.country?.id,
-      }
-    },
-    year: props.aboveTheFoldData.releaseDate.year
+    genre: props.aboveTheFoldData.genres.genres.map((e) => e.id)
   };
 }
