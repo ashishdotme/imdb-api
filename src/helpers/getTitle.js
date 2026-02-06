@@ -11,23 +11,6 @@ export default async function getTitle(id) {
 
   const props = json.props.pageProps;
 
-  const getCredits = (lookFor, v) => {
-    const result = props.aboveTheFoldData.principalCredits.find(
-      (e) => e?.category?.id === lookFor
-    );
-
-    return result
-      ? result.credits.map((e) => {
-          if (v === "2")
-            return {
-              id: e.name.id,
-              name: e.name.nameText.text,
-            };
-
-          return e.name.nameText.text;
-        })
-      : [];
-  };
 
   return {
     id: id,
@@ -72,39 +55,8 @@ export default async function getTitle(id) {
       releaseLocation: {
         country: props.mainColumnData.releaseDate?.country?.text,
         cca2: props.mainColumnData.releaseDate?.country?.id,
-      },
-      originLocations: props.mainColumnData.countriesOfOrigin.countries.map(
-        (e) => ({
-          country: e.text,
-          cca2: e.id,
-        })
-      ),
+      }
     },
-    year: props.aboveTheFoldData.releaseDate.year,
-    spokenLanguages: props.mainColumnData.spokenLanguages.spokenLanguages.map(
-      (e) => ({
-        language: e.text,
-        id: e.id,
-      })
-    ),
-    filmingLocations: props.mainColumnData.filmingLocations.edges.map(
-      (e) => e.node.text
-    ),
-    actors: getCredits("cast"),
-    actors_v2: getCredits("cast", "2"),
-    creators: getCredits("creator"),
-    creators_v2: getCredits("creator", "2"),
-    directors: getCredits("director"),
-    directors_v2: getCredits("director", "2"),
-    writers: getCredits("writer"),
-    writers_v2: getCredits("writer", "2"),
-    top_credits: props.aboveTheFoldData.principalCredits.map((e) => ({
-      id: e.category.id,
-      name: e.category.text,
-      credits: e.credits.map((e) => e.name.nameText.text),
-    })),
-    ...(props.aboveTheFoldData.titleType.isSeries
-      ? await seriesFetcher(id)
-      : {}),
+    year: props.aboveTheFoldData.releaseDate.year
   };
 }
